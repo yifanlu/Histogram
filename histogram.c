@@ -78,12 +78,15 @@ int main (int argc, char **argv) {
     int graph = 1;
     int table = 1;
     while (argc) {
-        size_t arglen;
-        if ((arglen = strlen (argv[0])) > 1 && argv[0][0] == '-') {
+        if (strlen (argv[0]) > 1 && argv[0][0] == '-') {
             switch (argv[0][1]) {
                 case 'l':
-                    if (arglen < 4) break; // invalid argument
-                    length = atoi (&argv[0][3]);
+                    if (argc < 2) {
+                        fprintf (stderr, "Invalid argument.\n");
+                        return 2;
+                    }
+                    length = atoi (argv[1]);
+                    argc--; argv++;
                     break;
                 case 's':
                     sort = 1;
